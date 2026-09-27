@@ -6,18 +6,10 @@ local c=P.Character or P.CharacterAdded:Wait()
 local h=c:WaitForChild("HumanoidRootPart")
 local m=c:WaitForChild("Humanoid")
 local cm=workspace.CurrentCamera
-getgenv().Sp=50
-getgenv().JP=100
-getgenv().En=true
-getgenv().UL=false
-getgenv().IJ=false
-getgenv().Fl=false
-getgenv().Nc=false
-getgenv().AF=false
-getgenv().AR=false
-getgenv().FU=false
-getgenv().AS=false
-getgenv().Th="Cyan"
+
+getgenv().Sp=50 getgenv().JP=100 getgenv().En=true getgenv().UL=false
+getgenv().IJ=false getgenv().Fl=false getgenv().Nc=false getgenv().AF=false
+getgenv().AR=false getgenv().FU=false getgenv().AS=false getgenv().Th="Cyan"
 getgenv().Cn={}
 local function AC(x)table.insert(getgenv().Cn,x)end
 local function Snd(i,v)
@@ -28,6 +20,7 @@ s.Parent=game:GetService("SoundService")
 s:Play()
 game:GetService("Debris"):AddItem(s,3)
 end
+
 local sa=Instance.new("Attachment")
 sa.Parent=h
 local sv=Instance.new("LinearVelocity")
@@ -38,6 +31,7 @@ sv.ForceLimitMode=Enum.ForceLimitMode.PerAxis
 sv.MaxAxesForce=Vector3.new(1e5,0,1e5)
 sv.Enabled=true
 sv.Parent=h
+
 AC(R.RenderStepped:Connect(function()
 if getgenv().UL or not h or not h.Parent then return end
 if getgenv().Fl or not sv.Enabled then
@@ -55,6 +49,7 @@ else
 sv.VectorVelocity=Vector3.new()
 end
 end))
+
 local jh=false
 AC(U.InputBegan:Connect(function(i,g)
 if g or getgenv().UL then return end
@@ -75,18 +70,23 @@ if jh and m and m.Parent and m:GetState()~=Enum.HumanoidStateType.Jumping then
 m:ChangeState(Enum.HumanoidStateType.Jumping)
 end
 end))
+
 AC(U.JumpRequest:Connect(function()
 if getgenv().UL then return end
 if m and m.Parent and getgenv().JP>50 and h then
+pcall(function()
 local j=Instance.new("BodyVelocity")
 j.MaxForce=Vector3.new(0,math.huge,0)
 j.Velocity=Vector3.new(0,getgenv().JP,0)
 j.Parent=h
 game:GetService("Debris"):AddItem(j,.2)
+end)
 end
 end))
+
 local fb,fg
 function getgenv().SF()
+pcall(function()
 if fb then fb:Destroy()end
 if fg then fg:Destroy()end
 sv.VectorVelocity=Vector3.new()
@@ -101,12 +101,16 @@ fg.P=1e4
 fg.D=200
 fg.CFrame=h.CFrame
 fg.Parent=h
+end)
 end
 function getgenv().EF()
+pcall(function()
 if fb then fb:Destroy()fb=nil end
 if fg then fg:Destroy()fg=nil end
 if getgenv().En then sv.Enabled=true end
+end)
 end
+
 AC(R.RenderStepped:Connect(function()
 if getgenv().UL or not getgenv().Fl then return end
 if not h or not h.Parent or not fb or not fg then return end
@@ -125,6 +129,7 @@ if mv.Magnitude>0 then mv=mv.Unit end
 fb.Velocity=mv*getgenv().Sp+Vector3.new(0,up*getgenv().Sp,0)
 fg.CFrame=CFrame.new(h.Position,h.Position+fw)
 end))
+
 AC(R.Stepped:Connect(function()
 if getgenv().UL or not getgenv().Nc then return end
 if c then
@@ -133,6 +138,7 @@ if v:IsA("BasePart")then v.CanCollide=false end
 end
 end
 end))
+
 local tc={}
 local lu=0
 AC(R.Heartbeat:Connect(function()
@@ -168,10 +174,11 @@ end
 end
 end
 if cl and cl.r and cl.r.Parent then
+pcall(function()
 if cl.it then
 h.CFrame=CFrame.new(cl.r.Position+Vector3.new(0,2,0))
 if cl.r:FindFirstChild("ProximityPrompt")then
-pcall(function()fireproximityprompt(cl.r.ProximityPrompt)end)
+fireproximityprompt(cl.r.ProximityPrompt)
 end
 else
 h.CFrame=CFrame.new(cl.r.Position+Vector3.new(0,5,-4))
@@ -184,12 +191,15 @@ task.wait(.05)
 vi:SendMouseButtonEvent(sp.X,sp.Y,0,false,game,1)
 end
 end
+end)
 task.wait(.08)
 end
 end))
+
 AC(h.Died:Connect(function()
 if getgenv().UL or not getgenv().AR then return end
 task.wait(1)
+pcall(function()
 local vi=game:GetService("VirtualInputManager")
 for _,v in ipairs(P.PlayerGui:GetDescendants())do
 if v:IsA("TextButton")and(v.Text:lower():find("respawn")or v.Text:lower():find("revive"))then
@@ -200,8 +210,11 @@ vi:SendMouseButtonEvent(p.X+s.X/2,p.Y+s.Y/2,0,false,game,1)
 break
 end
 end
+end)
 end))
+
 getgenv().UF=function()pcall(function()setfpscap(9999)end)end
+
 local Th={
 Cyan={m=Color3.fromRGB(12,14,20),t=Color3.fromRGB(20,24,34),a=Color3.fromRGB(0,220,255),x=Color3.fromRGB(240,245,255),s=Color3.fromRGB(0,220,255),b=Color3.fromRGB(28,32,44)},
 Purple={m=Color3.fromRGB(18,12,28),t=Color3.fromRGB(28,20,42),a=Color3.fromRGB(190,90,255),x=Color3.fromRGB(248,240,255),s=Color3.fromRGB(190,90,255),b=Color3.fromRGB(38,28,52)},
@@ -210,11 +223,13 @@ Green={m=Color3.fromRGB(10,22,16),t=Color3.fromRGB(18,34,26),a=Color3.fromRGB(0,
 Gold={m=Color3.fromRGB(24,20,10),t=Color3.fromRGB(36,30,16),a=Color3.fromRGB(255,200,50),x=Color3.fromRGB(255,250,235),s=Color3.fromRGB(255,200,50),b=Color3.fromRGB(46,40,22)}
 }
 local C=Th[getgenv().Th]
+
 local g=Instance.new("ScreenGui")
 g.Name="TylerUI"
 g.ResetOnSpawn=false
 g.IgnoreGuiInset=true
 g.Parent=P:WaitForChild("PlayerGui")
+
 local M=Instance.new("Frame")
 M.Size=UDim2.new(0,420,0,520)
 M.Position=UDim2.new(.03,0,.5,-260)
@@ -225,6 +240,7 @@ M.ClipsDescendants=true
 M.Parent=g
 local mc=Instance.new("UICorner")mc.CornerRadius=UDim.new(0,14)mc.Parent=M
 local ms=Instance.new("UIStroke")ms.Color=C.s ms.Thickness=1.5 ms.Transparency=.3 ms.Parent=M
+
 local TB=Instance.new("Frame")
 TB.Size=UDim2.new(1,0,0,48)
 TB.BackgroundColor3=C.t
@@ -237,6 +253,7 @@ TF.Position=UDim2.new(0,0,1,-14)
 TF.BackgroundColor3=C.t
 TF.BorderSizePixel=0
 TF.Parent=TB
+
 local D=Instance.new("Frame")
 D.Size=UDim2.new(0,10,0,10)
 D.Position=UDim2.new(0,18,.5,-5)
@@ -244,16 +261,18 @@ D.BackgroundColor3=C.a
 D.BorderSizePixel=0
 D.Parent=TB
 local dc=Instance.new("UICorner")dc.CornerRadius=UDim.new(1,0)dc.Parent=D
+
 local Tt=Instance.new("TextLabel")
 Tt.Size=UDim2.new(1,-160,1,0)
 Tt.Position=UDim2.new(0,36,0,0)
 Tt.BackgroundTransparency=1
-Tt.Text="TYLER UI v14"
+Tt.Text="TYLER UI v15"
 Tt.TextColor3=C.x
 Tt.Font=Enum.Font.GothamBold
 Tt.TextSize=16
 Tt.TextXAlignment=Enum.TextXAlignment.Left
 Tt.Parent=TB
+
 local TH=Instance.new("TextButton")
 TH.Size=UDim2.new(0,32,0,32)
 TH.Position=UDim2.new(1,-80,.5,-16)
@@ -265,6 +284,7 @@ TH.TextSize=16
 TH.AutoButtonColor=false
 TH.Parent=TB
 local thc=Instance.new("UICorner")thc.CornerRadius=UDim.new(0,8)thc.Parent=TH
+
 local HB=Instance.new("TextButton")
 HB.Size=UDim2.new(0,32,0,32)
 HB.Position=UDim2.new(1,-44,.5,-16)
@@ -276,6 +296,7 @@ HB.TextSize=16
 HB.AutoButtonColor=false
 HB.Parent=TB
 local hbc=Instance.new("UICorner")hbc.CornerRadius=UDim.new(0,8)hbc.Parent=HB
+
 local tab=Instance.new("Frame")
 tab.Size=UDim2.new(1,-24,0,36)
 tab.Position=UDim2.new(0,12,0,58)
@@ -289,11 +310,13 @@ tl.Padding=UDim.new(0,4)
 tl.HorizontalAlignment=Enum.HorizontalAlignment.Center
 tl.VerticalAlignment=Enum.VerticalAlignment.Center
 tl.Parent=tab
+
 local pc=Instance.new("Frame")
 pc.Size=UDim2.new(1,-20,1,-110)
 pc.Position=UDim2.new(0,10,0,102)
 pc.BackgroundTransparency=1
 pc.Parent=M
+
 local pg={}
 local function cp(n)
 local s=Instance.new("ScrollingFrame")
@@ -310,6 +333,7 @@ local l=Instance.new("UIListLayout")l.Padding=UDim.new(0,6)l.Parent=s
 pg[n]=s
 end
 cp("Main")cp("Movement")cp("Farm")cp("Settings")
+
 local tbs={}
 local function st(n)
 for nn,p in pairs(pg)do p.Visible=(nn==n)end
@@ -319,6 +343,7 @@ T:Create(b,TweenInfo.new(.2),{BackgroundColor3=a and C.a or C.b}):Play()
 b.TextColor3=a and Color3.new()or C.x
 end
 end
+
 local function mt(n)
 local b=Instance.new("TextButton")
 b.Size=UDim2.new(0,90,0,28)
@@ -334,6 +359,7 @@ b.MouseButton1Click:Connect(function()Snd(9046876412,.3)st(n)end)
 tbs[n]=b
 end
 mt("Main")mt("Movement")mt("Farm")mt("Settings")
+
 local function mT(p,t,k,cb)
 local b=Instance.new("TextButton")
 b.Size=UDim2.new(1,-8,0,42)
@@ -376,6 +402,7 @@ T:Create(kn,TweenInfo.new(.2),{Position=s3 and UDim2.new(1,-19,.5,-8)or UDim2.ne
 if cb then cb(s3)end
 end)
 end
+
 local function mS(p,t,k,mn,mx)
 local hd=Instance.new("Frame")
 hd.Size=UDim2.new(1,-8,0,56)
@@ -440,6 +467,7 @@ kn.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseBut
 U.InputChanged:Connect(function(i)if dr and i.UserInputType==Enum.UserInputType.MouseMovement then u(i)end end)
 U.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 then dr=false end end)
 end
+
 local function mB(p,t,cb)
 local b=Instance.new("TextButton")
 b.Size=UDim2.new(1,-8,0,40)
@@ -453,6 +481,7 @@ b.Parent=p
 local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,8)c.Parent=b
 b.MouseButton1Click:Connect(function()Snd(9046876412,.3)cb()end)
 end
+
 mT(pg.Main,"Speed Hack","En",function(s)sv.Enabled=s if not s then sv.VectorVelocity=Vector3.new()end end)
 mS(pg.Main,"Speed","Sp",16,300)
 mT(pg.Main,"Infinite Jump","IJ")
@@ -473,6 +502,7 @@ if sv then sv:Destroy()end
 if sa then sa:Destroy()end
 if g then g:Destroy()end
 end)
+
 local dr,ds,sp
 local function sd(i)
 if i.UserInputType==Enum.UserInputType.MouseButton1 then
@@ -488,6 +518,7 @@ M.Position=UDim2.new(sp.X.Scale,sp.X.Offset+d.X,sp.Y.Scale,sp.Y.Offset+d.Y)
 end
 end)
 U.InputEnded:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 then dr=false end end)
+
 local TO={"Cyan","Purple","Red","Green","Gold"}
 local ti=1
 TH.MouseButton1Click:Connect(function()
@@ -503,6 +534,7 @@ T:Create(ms,TweenInfo.new(.3),{Color=t.s}):Play()
 T:Create(D,TweenInfo.new(.3),{BackgroundColor3=t.a}):Play()
 end)
 HB.MouseButton1Click:Connect(function()M.Visible=not M.Visible end)
+
 U.InputBegan:Connect(function(i,gg)
 if gg or getgenv().UL then return end
 if i.KeyCode==Enum.KeyCode.K then M.Visible=not M.Visible
@@ -516,6 +548,7 @@ if sa then sa:Destroy()end
 if g then g:Destroy()end
 end
 end)
+
 st("Main")
 M.Visible=true
-print("[Tyler] v14 loaded. K=menu P=unload")
+print("[Tyler] v15 loaded. K=menu P=unload")
